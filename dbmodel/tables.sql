@@ -1,0 +1,6 @@
+USE PSIO;
+
+CREATE TABLE cars (
+    registration VARCHAR(255) NOT NULL PRIMARY KEY,
+    color VARCHAR(255) NOT NULL
+);
