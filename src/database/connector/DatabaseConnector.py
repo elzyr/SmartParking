@@ -2,6 +2,7 @@ import configparser
 import mysql.connector
 import logging
 
+
 class DatabaseConnector:
     def __init__(self, config_file):
         config = configparser.ConfigParser()
