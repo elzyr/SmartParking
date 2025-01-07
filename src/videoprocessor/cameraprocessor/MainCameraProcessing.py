@@ -1,10 +1,11 @@
 from database.connector.DatabaseConnector import DatabaseConnector
+from videoprocessor.cameraprocessor import AllCamerasResources
 from videoprocessor.frameprocessor.LineDetector import LineDetector
 from videoprocessor.videomanager.CameraType import CameraType
 
 
 class MainCameraProcessing:
-    def __init__(self, database_connector: DatabaseConnector, all_cameras_resources):
+    def __init__(self, database_connector: DatabaseConnector, all_cameras_resources:AllCamerasResources):
         self.database_connector = database_connector
         self.frame = None
         self.all_cameras_resources = all_cameras_resources
