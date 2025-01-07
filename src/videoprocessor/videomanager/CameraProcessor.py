@@ -1,4 +1,5 @@
 from database.connector.DatabaseConnector import DatabaseConnector
+from videoprocessor.cameraprocessor.AllCamerasResources import AllCamerasResources
 from videoprocessor.videomanager.CameraType import CameraType
 from videoprocessor.cameraprocessor.EntryCameraProcessing import EntryCameraProcessing
 from videoprocessor.cameraprocessor.ExitCameraProcessing import ExitCameraProcessing
@@ -14,6 +15,7 @@ class CameraProcessor:
 
     def __init__(self, database_connector: DatabaseConnector):
         self.database_connector = database_connector
+        self.all_cameras_resources= AllCamerasResources()
 
     def process_frames(self, frames):
         """
@@ -24,9 +26,9 @@ class CameraProcessor:
         """
         processed = []
 
-        entry_camera_processing = EntryCameraProcessing(self.database_connector)
-        main_camera_processing = MainCameraProcessing(self.database_connector)
-        exit_camera_processing = ExitCameraProcessing(self.database_connector)
+        entry_camera_processing = EntryCameraProcessing(self.database_connector,self.all_cameras_resources)
+        main_camera_processing = MainCameraProcessing(self.database_connector,self.all_cameras_resources)
+        exit_camera_processing = ExitCameraProcessing(self.database_connector,self.all_cameras_resources)
 
         camera_type = 0
         for frame in frames:
