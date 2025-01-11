@@ -16,6 +16,7 @@ class VideoProcessor:
         self.database_connector = DatabaseConnector(db_config_file)
         self.video_manager = VideoManager(video_paths)
         self.image_processor = CameraProcessor(database_connector=self.database_connector)
+        print('Test')
 
     def run(self):
         """

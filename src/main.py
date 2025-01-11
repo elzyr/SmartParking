@@ -4,6 +4,7 @@ import logging
 from src.database.repository.CarRepository import CarRepository
 from src.database.model.Car import Car
 from src.videoprocessor.VideoProcessor import VideoProcessor
+from videoprocessor.frameprocessor.LicensePlateReader import LicensePlateReader
 
 
 def database_example():
@@ -27,12 +28,19 @@ def database_example():
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
+    # plate = LicensePlateReader("../filmy/wjazd, parkowanie  i wyjazd poprawne/1a.mp4")
+    # plate.read_license_plates()
     # database_example()
 
     paths = [
         "../filmy/wjazd, parkowanie  i wyjazd poprawne/1a.mp4",
         "../filmy/wjazd, parkowanie  i wyjazd poprawne/1b.mp4",
         "../filmy/wjazd, parkowanie  i wyjazd poprawne/1c.mp4"
+    ]
+    paths = [
+        "../filmy/kolejka/1a.mp4",
+        "../filmy/kolejka/1b.mp4",
+        "../filmy/kolejka/1c.mp4"
     ]
 
     processor = VideoProcessor(paths, db_config_file='../config.ini')

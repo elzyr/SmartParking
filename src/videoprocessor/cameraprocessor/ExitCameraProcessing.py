@@ -20,5 +20,5 @@ class ExitCameraProcessing:
         LineDetector.detect_lines(self.frame, line_color=(0, 255, 0))
 
         # check_and_draw_gate musi byc na koncu
-        self.gate_manager.check_and_draw_gate(self.frame, camera_type=CameraType.EXIT_CAMERA.value)
+        # self.gate_manager.check_and_draw_gate(self.frame, camera_type=CameraType.EXIT_CAMERA.value)
         return self.frame

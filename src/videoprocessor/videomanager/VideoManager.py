@@ -10,7 +10,7 @@ import numpy as np
 
 
 class VideoManager:
-    def __init__(self, video_paths, target_width=512, target_height=384, target_fps=15):
+    def __init__(self, video_paths, target_width=650, target_height=550, target_fps=15):
         """
         Inicjalizacja klasy zarządzania wideo.
         :param video_paths: Lista ścieżek do trzech plików wideo.
