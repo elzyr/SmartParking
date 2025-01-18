@@ -30,7 +30,6 @@ class CarDetector:
         """
         Przetwarza obraz wejściowy:
         - Przycina obraz i maskę do wybranej ramki.
-        - Wykrywa samochody (keypoints).
         - Rysuje obrysy na oryginalnym obrazie.
         """
         rect_coords = (200, 0, frame.shape[1], frame.shape[0])  # Współrzędne ramki (poczatek bramki)
@@ -45,20 +44,18 @@ class CarDetector:
         eroded_mask = cv2.erode(closed_mask, self.kernel_close_erode, iterations=1)
         cropped_mask = eroded_mask
 
-        self.draw_car_localisation(cropped_frame, cropped_mask, rect_coords)
+        self.draw_car_localisation(cropped_frame, cropped_mask)
 
         frame[y1:y2, x1:x2] = cropped_frame
 
         return frame, eroded_mask
 
-    def draw_car_localisation(self, frame, binary_mask, rect_coords, color=(0, 255, 0)):
+    def draw_car_localisation(self, frame, binary_mask, color=(0, 255, 0)):
         """
         Rysuje otoczki wypukłe wokół obiektów, które znajdują się w określonym prostokącie.
         :param frame: Obraz wejściowy (kolorowy).
         :param binary_mask: Maska binarna z wykrytymi obiektami.
-        :param rect_coords: Współrzędne prostokąta (x1, y1, x2, y2).
         :param color: Kolor otoczki (domyślnie zielony).
-        :param min_area: Minimalna powierzchnia konturu do uwzględnienia.
         """
 
         contours, _ = cv2.findContours(binary_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
