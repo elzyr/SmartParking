@@ -2,4 +2,4 @@
 .idea
 filmy/
 **/__pycache__/
-./config.ini
+**/config.ini
