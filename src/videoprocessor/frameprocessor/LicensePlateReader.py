@@ -6,8 +6,8 @@ import re
 class LicensePlateReader:
     def __init__(self, frame_skip=20):
         self.reader = easyocr.Reader(['en'], gpu=True)
-        self.frame_skip = frame_skip  # Set frame skip interval
-        self.frame_count = 0  # Counter for processed frames
+        self.frame_skip = frame_skip
+        self.frame_count = 0
 
     def check_plate(self, frame):
         self.frame_count += 1
@@ -25,7 +25,6 @@ class LicensePlateReader:
                 return plate_number
 
         return None
-
 
     @staticmethod
     def is_plate_number(number):

@@ -16,9 +16,7 @@ class MainCameraProcessing:
             Przetwanie klatki z kamery głównej
         """
 
-        # todo - przetwarzanie klatki z kamery głównej
         LineDetector.detect_lines(self.frame, line_color=(0, 0, 255))
 
-        # check_and_draw_gate musi byc na koncu
         self.gate_manager.check_and_draw_gate(self.frame, camera_type=CameraType.MAIN_CAMERA.value)
         return self.frame

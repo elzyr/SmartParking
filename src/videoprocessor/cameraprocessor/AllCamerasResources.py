@@ -10,4 +10,3 @@ class AllCamerasResources:
     def __init__(self):
         self.license_plate_reader = LicensePlateReader()
         self.gate_manager = GateManager(self.license_plate_reader)
-
