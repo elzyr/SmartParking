@@ -5,6 +5,7 @@ from videoprocessor.videomanager.CameraType import CameraType
 
 import cv2
 
+
 class GateManager:
     """
         Klasa odpowiedzialna za zarządzanie bramami wjazdowymi i wyjazdowymi
@@ -17,7 +18,6 @@ class GateManager:
         self.license_plate_reader = license_plate_reader
         self.opened_entry_gate_time = 0
         self.opened_exit_gate_time = 0
-
 
     def __check_entry_gate(self, frame):
         plate = self.license_plate_reader.check_plate(frame)
@@ -32,7 +32,6 @@ class GateManager:
         else:
             print('Closed')
             self.__entry_gate_state = False
-
 
     def __check_exit_gate(self, frame):
 
@@ -61,7 +60,7 @@ class GateManager:
             """Kamera wjazdowa"""
             # self.__check_entry_gate(frame)
             entry_thread = threading.Thread(target=self.__process_entry_gate_in_background, args=(frame,))
-            entry_thread.daemon = True  # Ustawiamy jako wątek typu daemon, aby nie blokował zakończenia programu
+            entry_thread.daemon = True
             entry_thread.start()
             self.__draw_entry_gate(frame)
         elif camera_type == CameraType.MAIN_CAMERA.value:

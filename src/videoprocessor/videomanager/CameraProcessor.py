@@ -15,11 +15,10 @@ class CameraProcessor:
 
     def __init__(self, database_connector: DatabaseConnector):
         self.database_connector = database_connector
-        self.all_cameras_resources= AllCamerasResources()
-        self.entry_camera_processing = EntryCameraProcessing(self.database_connector,self.all_cameras_resources)
-        self.main_camera_processing = MainCameraProcessing(self.database_connector,self.all_cameras_resources)
-        self.exit_camera_processing = ExitCameraProcessing(self.database_connector,self.all_cameras_resources)
-
+        self.all_cameras_resources = AllCamerasResources()
+        self.entry_camera_processing = EntryCameraProcessing(self.database_connector, self.all_cameras_resources)
+        self.main_camera_processing = MainCameraProcessing(self.database_connector, self.all_cameras_resources)
+        self.exit_camera_processing = ExitCameraProcessing(self.database_connector, self.all_cameras_resources)
 
     def process_frames(self, frames):
         """
@@ -29,7 +28,6 @@ class CameraProcessor:
             CameraType.EXIT_CAMERA.value - kamera wyjazdowa
         """
         processed = []
-
 
         camera_type = 0
         for frame in frames:

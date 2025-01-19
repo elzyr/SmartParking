@@ -6,7 +6,7 @@ class LineDetector:
     @staticmethod
     def detect_lines(frame, line_color=(255, 0, 0)):
         """
-        Funkcja detekcji białych linii (np. na drodze) - przykład prostego przetwarzania.
+        Funkcja detekcji czarnych linii (np. na drodze) - przykład prostego przetwarzania.
         """
         gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         blurred = cv2.GaussianBlur(gray_frame, (5, 5), 0)
