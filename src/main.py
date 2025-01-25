@@ -4,6 +4,7 @@ import logging
 from src.database.repository.CarRepository import CarRepository
 from src.database.model.Car import Car
 from src.videoprocessor.VideoProcessor import VideoProcessor
+from video_configuration_json import video_configuration_json
 from videoprocessor.frameprocessor.LicensePlateReader import LicensePlateReader
 
 
@@ -43,10 +44,8 @@ if __name__ == '__main__':
         "../filmy/kolejka/1c.mp4"
     ]
 
-    processor = VideoProcessor(paths, db_config_file='../config.ini')
+    video_parameters = video_configuration_json['kolejka']['parameters']
+    print(video_parameters)
+    processor = VideoProcessor(paths, db_config_file='../config.ini', video_parameters=video_parameters)
     processor.run()
 
-    video_paths = ["video1.mp4", "video2.mp4", "video3.mp4"]
-    # Uruchomienie przetwarzania wideo
-    processor = VideoProcessor(video_paths, db_config_file='../config.ini')
-    processor.run()
