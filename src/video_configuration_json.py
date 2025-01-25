@@ -2,15 +2,13 @@ video_configuration_json = {
     'identyfikacja ludzika': {
         'parameters': {
             'parking_spaces': [
-                # w lewo -  w góra -
-                # Srodek
                 (180, 130, 70, 150),
                 (255, 130, 70, 150),
                 (330, 130, 70, 150),
                 (180, 285, 70, 150),
                 (255, 280, 70, 150),
                 (330, 275, 70, 150),
-                # Prawo od góry
+
                 (520, 10, 150, 80),
                 (520, 95, 150, 80),
                 (520, 190, 150, 80),
@@ -24,15 +22,13 @@ video_configuration_json = {
     'jasne niebieskie wyjazd': {
         'parameters': {
             'parking_spaces': [
-                # w lewo -  w góra -
-                # Srodek
                 (180, 130, 70, 150),
                 (255, 130, 70, 150),
                 (330, 130, 70, 150),
                 (180, 285, 70, 150),
                 (255, 280, 70, 150),
                 (330, 275, 70, 150),
-                # Prawo od góry
+
                 (520, 10, 150, 80),
                 (520, 95, 150, 80),
                 (520, 190, 150, 80),
@@ -46,15 +42,13 @@ video_configuration_json = {
     'kolizja pojazdów': {
         'parameters': {
             'parking_spaces': [
-                # w lewo -  w góra -
-                # Srodek
                 (180, 130, 70, 150),
                 (255, 130, 70, 150),
                 (330, 130, 70, 150),
                 (180, 285, 70, 150),
                 (255, 280, 70, 150),
                 (330, 275, 70, 150),
-                # Prawo od góry
+
                 (520, 10, 150, 80),
                 (520, 95, 150, 80),
                 (520, 190, 150, 80),
@@ -74,7 +68,7 @@ video_configuration_json = {
                 (180, 265, 70, 150),
                 (255, 270, 70, 150),
                 (330, 275, 70, 150),
-                # Prawo od góry
+
                 (520, 15, 150, 80),
                 (520, 105, 150, 80),
                 (520, 190, 150, 80),
@@ -88,15 +82,13 @@ video_configuration_json = {
     'powtorzona rejestracja': {
         'parameters': {
             'parking_spaces': [
-                # w lewo -  w góra -
-                # Srodek
                 (160, 130, 70, 150),
                 (235, 130, 70, 150),
                 (310, 130, 70, 150),
                 (170, 295, 70, 150),
                 (245, 290, 70, 150),
                 (320, 285, 70, 150),
-                # Prawo od góry
+
                 (520, 10, 150, 80),
                 (520, 95, 150, 80),
                 (520, 190, 150, 80),
@@ -110,15 +102,13 @@ video_configuration_json = {
     'rozmyslil sie chlopak': {
         'parameters': {
             'parking_spaces': [
-                # w lewo -  w góra -
-                # Srodek
                 (180, 130, 70, 150),
                 (255, 130, 70, 150),
                 (330, 130, 70, 150),
                 (180, 285, 70, 150),
                 (255, 280, 70, 150),
                 (330, 275, 70, 150),
-                # Prawo od góry
+
                 (520, 10, 150, 80),
                 (520, 95, 150, 80),
                 (520, 190, 150, 80),
@@ -132,15 +122,13 @@ video_configuration_json = {
     'szturchniecie pojazdow': {
         'parameters': {
             'parking_spaces': [
-                # w lewo -  w góra -
-                # Srodek
                 (180, 130, 70, 150),
                 (255, 130, 70, 150),
                 (330, 130, 70, 150),
                 (180, 285, 70, 150),
                 (255, 280, 70, 150),
                 (330, 275, 70, 150),
-                # Prawo od góry
+
                 (520, 10, 150, 80),
                 (520, 95, 150, 80),
                 (520, 190, 150, 80),
@@ -154,15 +142,13 @@ video_configuration_json = {
     'wjazd, parkowanie  i wyjazd poprawne': {
         'parameters': {
             'parking_spaces': [
-                # w lewo -  w góra -
-                # Srodek
                 (170, 110, 70, 150),
                 (245, 115, 70, 150),
                 (320, 120, 70, 150),
                 (170, 265, 70, 150),
                 (245, 270, 70, 150),
                 (320, 275, 70, 150),
-                # Prawo od góry
+
                 (520, 10, 150, 80),
                 (520, 95, 150, 80),
                 (520, 190, 150, 80),
@@ -176,15 +162,13 @@ video_configuration_json = {
     'wjazd bramka wjazdową do połowy, zawracanie, ponowne wjechanie i parkowanie': {
         'parameters': {
             'parking_spaces': [
-                # w lewo -  w góra -
-                # Srodek
                 (170, 130, 70, 150),
                 (245, 135, 70, 150),
                 (320, 130, 70, 150),
                 (170, 285, 70, 150),
                 (245, 285, 70, 150),
                 (320, 275, 70, 150),
-                # Prawo od góry
+
                 (520, 10, 150, 80),
                 (520, 95, 150, 80),
                 (520, 190, 150, 80),
@@ -198,15 +182,13 @@ video_configuration_json = {
     'wjazd i wyjazd bramka wjazdowa, nastpnie wyjazd poprawny': {
         'parameters': {
             'parking_spaces': [
-                # w lewo -  w góra -
-                # Srodek
                 (170, 130, 65, 140),
                 (240, 125, 65, 140),
                 (315, 130, 65, 140),
                 (170, 275, 60, 140),
                 (235, 275, 65, 140),
                 (310, 275, 65, 150),
-                # Prawo od góry
+
                 (510, 10, 150, 80),
                 (510, 95, 150, 80),
                 (510, 190, 150, 80),
@@ -220,15 +202,13 @@ video_configuration_json = {
     'wjazd parkowanie i próba wyjazdu bramka wjazdowa': {
         'parameters': {
             'parking_spaces': [
-                # w lewo -  w góra -
-                # Srodek
                 (170, 110, 70, 150),
                 (245, 115, 70, 150),
                 (320, 120, 70, 150),
                 (170, 265, 70, 150),
                 (245, 270, 70, 150),
                 (320, 275, 70, 150),
-                # Prawo od góry
+
                 (520, 10, 150, 80),
                 (520, 95, 150, 80),
                 (520, 190, 150, 80),
@@ -242,15 +222,13 @@ video_configuration_json = {
     'wyjazd braz': {
         'parameters': {
             'parking_spaces': [
-                # w lewo -  w góra -
-                # Srodek
                 (170, 120, 70, 150),
                 (245, 115, 70, 150),
                 (320, 120, 70, 150),
                 (170, 285, 70, 150),
                 (245, 280, 70, 150),
                 (320, 275, 70, 150),
-                # Prawo od góry
+
                 (520, 10, 130, 80),
                 (520, 95, 130, 80),
                 (520, 190, 130, 80),
@@ -264,15 +242,13 @@ video_configuration_json = {
     'wyjazd czerwone': {
         'parameters': {
             'parking_spaces': [
-                # w lewo -  w góra -
-                # Srodek
                 (170, 120, 70, 150),
                 (245, 120, 70, 150),
                 (320, 120, 70, 150),
                 (180, 285, 70, 150),
                 (255, 280, 70, 150),
                 (330, 275, 70, 150),
-                # Prawo od góry
+
                 (520, 10, 130, 80),
                 (520, 95, 130, 80),
                 (520, 190, 130, 80),
@@ -286,15 +262,13 @@ video_configuration_json = {
     'wyjazd z parkingu brazowe auto': {
         'parameters': {
             'parking_spaces': [
-                # w lewo -  w góra -
-                # Srodek
                 (170, 130, 70, 150),
                 (245, 130, 70, 150),
                 (320, 130, 70, 150),
                 (180, 295, 70, 150),
                 (255, 290, 70, 150),
                 (330, 285, 70, 150),
-                # Prawo od góry
+
                 (520, 10, 130, 80),
                 (520, 95, 130, 80),
                 (520, 190, 130, 80),
@@ -308,15 +282,13 @@ video_configuration_json = {
     'wyjazd z parkingu niebieskie autko': {
         'parameters': {
             'parking_spaces': [
-                # w lewo -  w góra -
-                # Srodek
                 (160, 130, 70, 150),
                 (235, 130, 70, 150),
                 (310, 130, 70, 150),
                 (170, 295, 70, 150),
                 (245, 290, 70, 150),
                 (320, 285, 70, 150),
-                # Prawo od góry
+
                 (520, 10, 130, 80),
                 (520, 95, 130, 80),
                 (520, 190, 130, 80),
@@ -330,15 +302,13 @@ video_configuration_json = {
     'wyjazd zielone': {
         'parameters': {
             'parking_spaces': [
-                # w lewo -  w góra -
-                # Srodek
                 (160, 120, 70, 160),
                 (235, 120, 70, 160),
                 (310, 130, 70, 160),
                 (170, 295, 70, 150),
                 (245, 290, 70, 150),
                 (320, 285, 70, 150),
-                # Prawo od góry
+
                 (520, 10, 130, 80),
                 (520, 95, 130, 80),
                 (520, 190, 130, 80),
@@ -352,15 +322,13 @@ video_configuration_json = {
     'wyjazd zolte': {
         'parameters': {
             'parking_spaces': [
-                # w lewo -  w góra -
-                # Srodek
                 (170, 120, 70, 160),
                 (245, 120, 70, 160),
                 (320, 120, 70, 160),
                 (170, 295, 70, 150),
                 (245, 290, 70, 150),
                 (320, 285, 70, 150),
-                # Prawo od góry
+
                 (520, 10, 130, 80),
                 (520, 95, 130, 80),
                 (520, 190, 130, 80),
@@ -374,15 +342,13 @@ video_configuration_json = {
     'zly parking': {
         'parameters': {
             'parking_spaces': [
-                # w lewo -  w góra -
-                # Srodek
                 (170, 120, 70, 160),
                 (245, 120, 70, 160),
                 (320, 120, 70, 160),
                 (175, 295, 70, 150),
                 (250, 290, 70, 150),
                 (330, 285, 70, 150),
-                # Prawo od góry
+
                 (520, 10, 130, 80),
                 (520, 95, 130, 80),
                 (520, 190, 130, 80),
