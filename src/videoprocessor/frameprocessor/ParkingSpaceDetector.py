@@ -18,7 +18,7 @@ class ParkingSpaceDetector:
             occupancy = colorful_pixels / total_pixels
             if occupancy > threshold:
                 color = (0, 0, 255)  # czerwony
-                occupancy_for_display = occupancy * 2
+                occupancy_for_display = occupancy * 3
                 if occupancy_for_display > 1.0:
                     occupancy_for_display = 1.0
             else:
@@ -30,8 +30,9 @@ class ParkingSpaceDetector:
         for (idx, x, y, w, h, color, occupancy_for_display) in results:
             # Prostokąt
             cv2.rectangle(frame, (x, y), (x + w, y + h), color, 2)
+
             # Tekst z wynikiem
             text = f"{idx + 1} ({occupancy_for_display * 100:.0f}%)"
-            cv2.putText(frame, text, (x, y - 5), font, 0.6, color, 2, cv2.LINE_AA)
+            cv2.putText(frame, text, (x + 7, y + 23), font, 0.55, color, 2, cv2.LINE_AA)
 
         return frame
