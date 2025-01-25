@@ -42,7 +42,7 @@ def database_example():
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-    directory = 'wjazd, parkowanie  i wyjazd poprawne'
+    directory = 'identyfikacja ludzika'
     paths = get_specific_files_list(directory, 1)
 
     video_parameters = video_configuration_json[directory]['parameters']
