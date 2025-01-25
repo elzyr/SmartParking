@@ -65,28 +65,6 @@ video_configuration_json = {
             'entry_gate_height': 0,
         }
     },
-    'wjazd, parkowanie  i wyjazd poprawne': {
-        'parameters': {
-            'parking_spaces': [
-                # w lewo -  w góra -
-                # Srodek
-                (170, 110, 70, 150),
-                (245, 115, 70, 150),
-                (320, 120, 70, 150),
-                (170, 265, 70, 150),
-                (245, 270, 70, 150),
-                (320, 275, 70, 150),
-                # Prawo od góry
-                (520, 10, 150, 80),
-                (520, 95, 150, 80),
-                (520, 190, 150, 80),
-                (520, 285, 150, 80),
-                (520, 385, 150, 90),
-                (520, 470, 150, 70),
-            ],
-            'entry_gate_height': 0,
-        }
-    },
     'nie moze wjechac': {
         'parameters': {
             'parking_spaces': [
@@ -150,9 +128,95 @@ video_configuration_json = {
             ],
             'entry_gate_height': 0,
         }
+    },
+    'szturchniecie pojazdow': {
+        'parameters': {
+            'parking_spaces': [
+                # w lewo -  w góra -
+                # Srodek
+                (180, 130, 70, 150),
+                (255, 130, 70, 150),
+                (330, 130, 70, 150),
+                (180, 285, 70, 150),
+                (255, 280, 70, 150),
+                (330, 275, 70, 150),
+                # Prawo od góry
+                (520, 10, 150, 80),
+                (520, 95, 150, 80),
+                (520, 190, 150, 80),
+                (520, 285, 150, 80),
+                (520, 375, 150, 90),
+                (520, 470, 150, 70),
+            ],
+            'entry_gate_height': 0,
+        }
+    },
+    'wjazd, parkowanie  i wyjazd poprawne': {
+        'parameters': {
+            'parking_spaces': [
+                # w lewo -  w góra -
+                # Srodek
+                (170, 110, 70, 150),
+                (245, 115, 70, 150),
+                (320, 120, 70, 150),
+                (170, 265, 70, 150),
+                (245, 270, 70, 150),
+                (320, 275, 70, 150),
+                # Prawo od góry
+                (520, 10, 150, 80),
+                (520, 95, 150, 80),
+                (520, 190, 150, 80),
+                (520, 285, 150, 80),
+                (520, 385, 150, 90),
+                (520, 470, 150, 70),
+            ],
+            'entry_gate_height': 0,
+        }
+    },
+    'wjazd bramka wjazdową do połowy, zawracanie, ponowne wjechanie i parkowanie': {
+        'parameters': {
+            'parking_spaces': [
+                # w lewo -  w góra -
+                # Srodek
+                (170, 130, 70, 150),
+                (245, 135, 70, 150),
+                (320, 130, 70, 150),
+                (170, 285, 70, 150),
+                (245, 285, 70, 150),
+                (320, 275, 70, 150),
+                # Prawo od góry
+                (520, 10, 150, 80),
+                (520, 95, 150, 80),
+                (520, 190, 150, 80),
+                (520, 285, 150, 80),
+                (520, 365, 150, 90),
+                (520, 470, 150, 70),
+            ],
+            'entry_gate_height': 0,
+        }
+    },
+    'wjazd i wyjazd bramka wjazdowa, nastpnie wyjazd poprawny': {
+        'parameters': {
+            'parking_spaces': [
+                # w lewo -  w góra -
+                # Srodek
+                (170, 130, 65, 140),
+                (240, 125, 65, 140),
+                (315, 130, 65, 140),
+                (170, 275, 60, 140),
+                (235, 275, 65, 140),
+                (310, 275, 65, 150),
+                # Prawo od góry
+                (510, 10, 150, 80),
+                (510, 95, 150, 80),
+                (510, 190, 150, 80),
+                (510, 285, 150, 80),
+                (510, 365, 150, 90),
+                (510, 470, 150, 70),
+            ],
+            'entry_gate_height': 0,
+        }
     }
-
-
 
 
 }
