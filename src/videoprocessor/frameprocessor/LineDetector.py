@@ -3,19 +3,27 @@ import numpy as np
 
 
 class LineDetector:
-    @staticmethod
-    def detect_lines(frame, line_color=(255, 0, 0)):
+    def __init__(self):
+        self.frame_counter = 0
+        self.lines_mask = None
+
+    def detect_lines(self, frame, original_frame, line_color=(255, 0, 0)):
         """
         Funkcja detekcji czarnych linii (np. na drodze) - przykład prostego przetwarzania.
         """
-        gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        if self.frame_counter % 7 == 0:
+            self.lines_mask = LineDetector.find_lines(original_frame)
+
+        self.frame_counter += 1
+        if self.lines_mask is not None:
+            for line in self.lines_mask:
+                x1, y1, x2, y2 = line[0]
+                cv2.line(frame, (x1, y1), (x2, y2), line_color, 1)
+        return frame
+
+    @staticmethod
+    def find_lines(original_frame):
+        gray_frame = cv2.cvtColor(original_frame, cv2.COLOR_BGR2GRAY)
         blurred = cv2.GaussianBlur(gray_frame, (5, 5), 0)
         edges = cv2.Canny(blurred, 50, 150)
-
-        # Wykrywanie linii Hough
-        lines = cv2.HoughLinesP(edges, 1, np.pi / 180, 100, minLineLength=100, maxLineGap=10)
-        if lines is not None:
-            for line in lines:
-                x1, y1, x2, y2 = line[0]
-                cv2.line(frame, (x1, y1), (x2, y2), line_color, 2)
-        return frame
+        return cv2.HoughLinesP(edges, 1, np.pi / 180, 100, minLineLength=100, maxLineGap=10)
