@@ -1,5 +1,6 @@
 from database.connector.DatabaseConnector import DatabaseConnector
 from videoprocessor.cameraprocessor import AllCamerasResources
+from videoprocessor.videomanager.CameraType import CameraType
 
 
 class ExitCameraProcessing:
@@ -16,4 +17,6 @@ class ExitCameraProcessing:
 
         # todo - przetwarzanie klatki z kamery wyjazdowej
 
+        # check_and_draw_gate musi byc na koncu
+        self.gate_manager.check_and_draw_gate(self.frame, camera_type=CameraType.EXIT_CAMERA.value)
         return self.frame
