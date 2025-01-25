@@ -2,12 +2,17 @@ import cv2
 import numpy as np
 from .ColorRange import COLOR_RANGES
 from functools import reduce
+from src.database.connector.DatabaseConnector import DatabaseConnector
+import logging
+from src.database.repository.CarRepository import CarRepository
+
 
 class CarDetector:
-    def __init__(self):
+    def __init__(self,db_connector: DatabaseConnector):
         self.kernel_close_erode = np.ones((4, 4), np.uint8)
         self.color_ranges = COLOR_RANGES
         self.previous_objects = []
+        self.db_connector = db_connector
 
     def detect_cars_by_color(self, hsv_image):
         """
@@ -56,7 +61,7 @@ class CarDetector:
         eroded_mask = cv2.erode(closed_mask, self.kernel_close_erode, iterations=1)
         cropped_mask = eroded_mask
         detected_objects = self.get_detected_objects(cropped_frame, cropped_mask)
-        self.detect_collision(detected_objects)
+        self.detect_collision(detected_objects, cropped_frame)
         self.previous_objects = detected_objects
 
         self.draw_car_localisation(cropped_frame, cropped_mask)
@@ -101,11 +106,29 @@ class CarDetector:
                 })
         return detected_objects
 
-
-    def detect_collision(self, current_objects):
+    def get_dominant_color(self, roi):
         """
-        Wykrywa zmiany w powierzchni obiektów.
-        :param current_objects: Lista obiektów w bieżącej klatce.
+        Określa dominujący kolor w regionie obiektu (ROI)
+        """
+        try:
+            hsv_roi = cv2.cvtColor(roi, cv2.COLOR_BGR2HSV)
+            for color_range in self.color_ranges:
+                mask = cv2.inRange(
+                    hsv_roi,
+                    np.array(color_range.lower, dtype=np.uint8),
+                    np.array(color_range.upper, dtype=np.uint8)
+                )
+                if cv2.countNonZero(mask) > 0:
+                    return color_range.name
+            return "unknown"
+        except Exception as e:
+            logging.error(f"Error determining dominant color: {e}")
+            return "error"
+
+
+    def detect_collision(self, current_objects, frame):
+        """
+        Wykrywa zmiany w powierzchni obiektów i loguje incydent do bazy danych.
         """
         for current in current_objects:
             for previous in self.previous_objects:
@@ -115,6 +138,26 @@ class CarDetector:
                 overlap_x = (x1 < x2 + w2) and (x2 < x1 + w1)
                 overlap_y = (y1 < y2 + h2) and (y2 < y1 + h1)
                 if overlap_x and overlap_y:
-                    if abs(current["area"]) > abs(previous['area'] * 3.0) and abs(current["area"] < 10000):
+                    if abs(current["area"]) > abs(previous['area'] * 3.0) and abs(current["area"]) < 10000:
                         print(f"Kolizja wykryta! Zmieniona powierzchnia: {previous['area']} -> {current['area']}")
+
+                        color1 = self.get_dominant_color(frame[y1:y1 + h1, x1:x1 + w1])
+                        color2 = self.get_dominant_color(frame[y2:y2 + h2, x2:x2 + w2])
+
+                        self.log_incidents_to_database(color1, color2, "Collision detected")
                         return
+
+    def log_incidents_to_database(self, color1, color2, description):
+        """
+        Loguje kolory dwóch samochodów do bazy danych.
+        """
+        try:
+            query = "INSERT INTO logs (color_car1, color_car2, description) VALUES (%s, %s, %s)"
+            cursor = self.db_connector.connection.cursor()
+            cursor.execute(query, (color1, color2, description))
+            self.db_connector.connection.commit()
+            cursor.close()
+            logging.info(f"Logged incident: {color1}, {color2}, {description}")
+        except Exception as e:
+            logging.error(f"Error logging incident to database: {e}")
+
