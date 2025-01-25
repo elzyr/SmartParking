@@ -1,6 +1,7 @@
 from database.connector.DatabaseConnector import DatabaseConnector
 from videoprocessor.cameraprocessor import AllCamerasResources
 from videoprocessor.frameprocessor.LineDetector import LineDetector
+from videoprocessor.frameprocessor.ParkingSpaceDetector import ParkingSpaceDetector
 from videoprocessor.videomanager.CameraType import CameraType
 from videoprocessor.frameprocessor.CarDetector import CarDetector
 import cv2
@@ -15,6 +16,7 @@ class MainCameraProcessing:
         self.car_detector = CarDetector()
         self.line_detector = LineDetector()
         self.original_frame = None
+        self.parking_spaces = self.all_cameras_resources.parking_spaces
 
     def run(self):
         """
@@ -24,6 +26,6 @@ class MainCameraProcessing:
 
         self.car_detector.process_frame(self.frame)
         self.frame = self.line_detector.detect_lines(self.frame, self.original_frame)
-
+        ParkingSpaceDetector.detect_and_annotate(self.frame, self.original_frame, self.parking_spaces)
         self.gate_manager.check_and_draw_gate(self.frame, camera_type=CameraType.MAIN_CAMERA.value)
         return self.frame

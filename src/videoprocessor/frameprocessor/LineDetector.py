@@ -6,12 +6,13 @@ class LineDetector:
     def __init__(self):
         self.frame_counter = 0
         self.lines_mask = None
+        self.check_frequency = 10
 
-    def detect_lines(self, frame, original_frame, line_color=(255, 0, 0)):
+    def detect_lines(self, frame, original_frame, line_color=(0, 255, 0)):
         """
         Funkcja detekcji czarnych linii (np. na drodze) - przykład prostego przetwarzania.
         """
-        if self.frame_counter % 7 == 0:
+        if self.frame_counter % self.check_frequency == 0:
             self.lines_mask = LineDetector.find_lines(original_frame)
 
         self.frame_counter += 1
