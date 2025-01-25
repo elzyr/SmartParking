@@ -2,19 +2,21 @@ video_configuration_json = {
     'wjazd, parkowanie  i wyjazd poprawne': {
         'parameters': {
             'parking_spaces': [
-                # --- 6 miejsc w części środkowej (2 kolumny x 3 rzędy) ---
-                (200, 70, 80, 120),  # lewa kolumna, górny wiersz
-                (300, 70, 80, 120),  # prawa kolumna, górny wiersz
-                (200, 220, 80, 120),  # lewa kolumna, środkowy wiersz
-                (300, 220, 80, 120),  # prawa kolumna, środkowy wiersz
-                (200, 370, 80, 120),  # lewa kolumna, dolny wiersz
-                (300, 370, 80, 120),  # prawa kolumna, dolny wiersz
-
-                # --- 4 miejsca po prawej stronie w pionie ---
-                (500, 50, 80, 120),
-                (500, 200, 80, 120),
-                (500, 350, 80, 120),
-                (500, 500, 80, 120),
+                # w lewo -  w góra -
+                # Srodek
+                (170, 110, 70, 150),  # lewy górny róg
+                (245, 115, 70, 150),  # górny środek
+                (320, 120, 70, 150),  # prawy górny róg
+                (170, 265, 70, 150),  # lewy dolny róg
+                (245, 270, 70, 150),  # dolny środek
+                (320, 275, 70, 150),  # prawy prawy róg
+                # Prawo od góry
+                (520, 10, 150, 80),
+                (520, 95, 150, 80),
+                (520, 190, 150, 80),
+                (520, 285, 150, 80),
+                (520, 385, 150, 70),
+                (520, 470, 150, 70),
             ],
             'entry_gate_height': 0,
         }
