@@ -70,7 +70,7 @@ class CarDetector:
 
         return frame, eroded_mask
 
-    def draw_car_localisation(self, frame, binary_mask, color=(0, 255, 0)):
+    def draw_car_localisation(self, frame, binary_mask, color=(150, 0, 0)):
         """
         Rysuje otoczki wypukłe wokół obiektów, które znajdują się w określonym prostokącie.
         :param frame: Obraz wejściowy (kolorowy).
