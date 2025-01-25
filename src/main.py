@@ -8,17 +8,13 @@ from video_configuration_json import video_configuration_json
 import os
 
 
-def get_specific_files_list(directory_name, video_number):
-    video_number = str(video_number)
-    matching_files = []
-    directory_name = f'../filmy/{directory_name}'
-    for filename in os.listdir(directory_name):
-        if filename.startswith(video_number) and len(filename) > 2 and filename[1] in ['a', 'b',
-                                                                                       'c'] and filename.endswith(
-            ".mp4"):
-            matching_files.append(os.path.join(directory_name, filename))
-
-    return matching_files
+def get_videos(directory_name) -> list:
+    directory_path = f'../filmy/{directory_name}'
+    return [
+        os.path.join(directory_path, filename)
+        for filename in os.listdir(directory_path)
+        if filename.startswith("1") and len(filename) > 2 and filename[1] in "abc" and filename.endswith(".mp4")
+    ]
 
 
 def database_example():
@@ -42,10 +38,10 @@ def database_example():
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-    directory = 'identyfikacja ludzika'
-    paths = get_specific_files_list(directory, 1)
+    wybor_filmu = 'identyfikacja ludzika'
+    paths = get_videos(wybor_filmu)
 
-    video_parameters = video_configuration_json[directory]['parameters']
+    video_parameters = video_configuration_json[wybor_filmu]['parameters']
     print(video_parameters)
     processor = VideoProcessor(paths, db_config_file='../config.ini', video_parameters=video_parameters)
     processor.run()
