@@ -1,5 +1,5 @@
 video_configuration_json = {
-    'kolejka': {
+    'wjazd, parkowanie  i wyjazd poprawne': {
         'parameters': {
             'parking_spaces': [
                 # --- 6 miejsc w części środkowej (2 kolumny x 3 rzędy) ---

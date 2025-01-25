@@ -5,19 +5,18 @@ from src.database.repository.CarRepository import CarRepository
 from src.database.model.Car import Car
 from src.videoprocessor.VideoProcessor import VideoProcessor
 from video_configuration_json import video_configuration_json
-from videoprocessor.frameprocessor.LicensePlateReader import LicensePlateReader
 import os
 
 
-def get_specific_files_list(directory, video_number):
+def get_specific_files_list(directory_name, video_number):
     video_number = str(video_number)
     matching_files = []
-    directory = f'../filmy/{directory}'
-    for filename in os.listdir(directory):
+    directory_name = f'../filmy/{directory_name}'
+    for filename in os.listdir(directory_name):
         if filename.startswith(video_number) and len(filename) > 2 and filename[1] in ['a', 'b',
                                                                                        'c'] and filename.endswith(
             ".mp4"):
-            matching_files.append(os.path.join(directory, filename))
+            matching_files.append(os.path.join(directory_name, filename))
 
     return matching_files
 
@@ -43,10 +42,10 @@ def database_example():
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-    dir = 'wjazd, parkowanie  i wyjazd poprawne'
-    paths = get_specific_files_list(dir, 1)
+    directory = 'wjazd, parkowanie  i wyjazd poprawne'
+    paths = get_specific_files_list(directory, 1)
 
-    video_parameters = video_configuration_json['kolejka']['parameters']
+    video_parameters = video_configuration_json[directory]['parameters']
     print(video_parameters)
     processor = VideoProcessor(paths, db_config_file='../config.ini', video_parameters=video_parameters)
     processor.run()
