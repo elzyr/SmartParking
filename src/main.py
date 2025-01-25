@@ -12,6 +12,7 @@ import os
 def get_specific_files_list(directory, video_number):
     video_number = str(video_number)
     matching_files = []
+    directory = f'../filmy/{directory}'
     for filename in os.listdir(directory):
         if filename.startswith(video_number) and len(filename) > 2 and filename[1] in ['a', 'b',
                                                                                        'c'] and filename.endswith(
@@ -42,10 +43,7 @@ def database_example():
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-    # plate = LicensePlateReader("../filmy/wjazd, parkowanie  i wyjazd poprawne/1a.mp4")
-    # plate.read_license_plates()
-    # database_example()
-    dir = '../filmy/wjazd, parkowanie  i wyjazd poprawne'
+    dir = 'wjazd, parkowanie  i wyjazd poprawne'
     paths = get_specific_files_list(dir, 1)
 
     video_parameters = video_configuration_json['kolejka']['parameters']
