@@ -65,7 +65,7 @@ class CarDetector:
         mask = self.detect_cars_by_color(hsv)
         mask[:15, :] = 0  # Usunięcie góry ramki
         mask[-5:, :] = 0  # Usunięcie dolu ramki
-        mask[:, -5:] = 0  # Usunięcie dolu ramki
+        mask[:, -5:] = 0  # Usunięcie prawej krawędzi ramki
         closed_mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, self.kernel_close)
         eroded_mask = cv2.erode(closed_mask, self.kernel_erode, iterations=1)
         cropped_mask = eroded_mask
