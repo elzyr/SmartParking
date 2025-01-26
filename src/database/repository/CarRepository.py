@@ -66,12 +66,11 @@ class CarRepository:
     def car_incidents(self,color1, color2, description):
         try:
             cursor = self.db_connector.connection.cursor()
-            query = "INSERT INTO logs (color_car1, color_car2,description) VALUES (%s, %s, %s)"
+            query = "INSERT INTO car_logs (color_car1, color_car2,description) VALUES (%s, %s, %s)"
             cursor.execute(query, (color1, color2, description))
             self.db_connector.connection.commit()
             cursor.close()
             logging.info('Added incident to the database')
-            self.db_connector.db.disconnect()
 
         except mysql.connector.Error as err:
             logging.error(f"Error: {err}")

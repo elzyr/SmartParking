@@ -5,14 +5,18 @@ from functools import reduce
 from src.database.connector.DatabaseConnector import DatabaseConnector
 import logging
 from src.database.repository.CarRepository import CarRepository
-
+import time
 
 class CarDetector:
     def __init__(self,db_connector: DatabaseConnector):
-        self.kernel_close_erode = np.ones((4, 4), np.uint8)
+        self.kernel_erode = np.ones((5, 5), np.uint8)
+        self.kernel_close = np.ones((7, 7), np.uint8)
         self.color_ranges = COLOR_RANGES
         self.previous_objects = []
         self.db_connector = db_connector
+        self.detected_collisions = set()
+        self.car_repository = CarRepository(db_connector)
+
 
     def detect_cars_by_color(self, hsv_image):
         """
@@ -24,8 +28,8 @@ class CarDetector:
         ]
         combined_mask = reduce(cv2.bitwise_or, masks)
 
-        white_lower = np.array([0, 0, 150], dtype=np.uint8)
-        white_upper = np.array([230, 30, 255], dtype=np.uint8)
+        white_lower = np.array([0, 0, 150], dtype=np.uint8) # ignorowanie jasnych obszarów
+        white_upper = np.array([220, 30, 255], dtype=np.uint8)
         white_mask = cv2.inRange(hsv_image, white_lower, white_upper)
 
         filtered_mask = cv2.bitwise_and(combined_mask, cv2.bitwise_not(white_mask))
@@ -36,10 +40,10 @@ class CarDetector:
         """
         Zamienia krawędzie obrazu na czarne.
         """
-        frame[:border_size, :] = 0
-        frame[-border_size:, :] = 0
-        frame[:, :border_size] = 0
-        frame[:, -border_size:] = 0
+        frame[:border_size-2, :] = 0
+        frame[-border_size+2:, :] = 0
+        frame[:, :border_size-5] = 0
+        frame[:, -border_size+5:] = 0
         return frame
 
     def process_frame(self, frame):
@@ -54,11 +58,16 @@ class CarDetector:
         cropped_frame = frame[y1:y2, x1:x2]
 
         hsv_image = cv2.cvtColor(cropped_frame, cv2.COLOR_BGR2HSV)
-        mask = self.detect_cars_by_color(hsv_image)
+        h, s, v = cv2.split(hsv_image)
+        v = cv2.add(v, np.full_like(v, 30))
+        v = np.clip(v, 0, 255)
+        hsv = cv2.merge((h, s, v))
+        mask = self.detect_cars_by_color(hsv)
         mask[:15, :] = 0  # Usunięcie góry ramki
         mask[-5:, :] = 0  # Usunięcie dolu ramki
-        closed_mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, self.kernel_close_erode)
-        eroded_mask = cv2.erode(closed_mask, self.kernel_close_erode, iterations=1)
+        mask[:, -5:] = 0  # Usunięcie dolu ramki
+        closed_mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, self.kernel_close)
+        eroded_mask = cv2.erode(closed_mask, self.kernel_erode, iterations=1)
         cropped_mask = eroded_mask
         detected_objects = self.get_detected_objects(cropped_frame, cropped_mask)
         self.detect_collision(detected_objects, cropped_frame)
@@ -81,7 +90,7 @@ class CarDetector:
         contours, _ = cv2.findContours(binary_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
         # Otoczka wypukła
-        filtered_contours = [cv2.convexHull(contour) for contour in contours if cv2.contourArea(contour) >= 800]
+        filtered_contours = [cv2.convexHull(contour) for contour in contours if cv2.contourArea(contour) >= 1000]
         cv2.drawContours(frame, filtered_contours, -1, color, 2)
 
     def get_detected_objects(self, frame, binary_mask):
@@ -98,7 +107,7 @@ class CarDetector:
             # Otoczka wypukła
             hull = cv2.convexHull(contour)
             area = cv2.contourArea(hull)  # Powierzchnia otoczki wypukłej
-            if area >= 800:
+            if area >= 900:
                 x, y, w, h = cv2.boundingRect(hull)
                 detected_objects.append({
                     "area": area,
@@ -139,25 +148,14 @@ class CarDetector:
                 overlap_y = (y1 < y2 + h2) and (y2 < y1 + h1)
                 if overlap_x and overlap_y:
                     if abs(current["area"]) > abs(previous['area'] * 3.0) and abs(current["area"]) < 10000:
-                        print(f"Kolizja wykryta! Zmieniona powierzchnia: {previous['area']} -> {current['area']}")
-
                         color1 = self.get_dominant_color(frame[y1:y1 + h1, x1:x1 + w1])
                         color2 = self.get_dominant_color(frame[y2:y2 + h2, x2:x2 + w2])
-
-                        self.log_incidents_to_database(color1, color2, "Collision detected")
+                        collision_pair = tuple(sorted((color1, color2)))
+                        if collision_pair in self.detected_collisions:
+                            continue
+                        if color2 == color1:
+                            continue
+                        print(f"Kolizja wykryta! {color1} {color2} Zmieniona powierzchnia: {previous['area']} -> {current['area']}")
+                        self.car_repository.car_incidents(color1, color2, "Collision detected")
+                        self.detected_collisions.add(collision_pair)
                         return
-
-    def log_incidents_to_database(self, color1, color2, description):
-        """
-        Loguje kolory dwóch samochodów do bazy danych.
-        """
-        try:
-            query = "INSERT INTO logs (color_car1, color_car2, description) VALUES (%s, %s, %s)"
-            cursor = self.db_connector.connection.cursor()
-            cursor.execute(query, (color1, color2, description))
-            self.db_connector.connection.commit()
-            cursor.close()
-            logging.info(f"Logged incident: {color1}, {color2}, {description}")
-        except Exception as e:
-            logging.error(f"Error logging incident to database: {e}")
-

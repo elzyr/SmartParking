@@ -5,7 +5,7 @@ CREATE TABLE cars (
     color VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE logs (
+CREATE TABLE car_logs (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     color_car1 VARCHAR(255) NOT NULL,
     color_car2 VARCHAR(255) NOT NULL,
