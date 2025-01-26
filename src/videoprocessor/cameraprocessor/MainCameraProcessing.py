@@ -14,7 +14,7 @@ class MainCameraProcessing:
         self.frame = None
         self.all_cameras_resources = all_cameras_resources
         self.gate_manager = all_cameras_resources.gate_manager
-        self.car_detector = CarDetector(database_connector)
+        self.car_detector = CarDetector(self.database_connector)
         self.line_detector = LineDetector()
         self.original_frame = None
         self.parking_spaces = self.all_cameras_resources.parking_spaces
