@@ -11,13 +11,18 @@ class GateManager:
         Klasa odpowiedzialna za zarządzanie bramami wjazdowymi i wyjazdowymi
     """
 
-    def __init__(self, license_plate_reader: LicensePlateReader):
+    def __init__(self, license_plate_reader: LicensePlateReader, video_parameters):
         self.__entry_gate_state = False
         self.__exit_gate_state = False
         self.__main_gate_state = False
         self.license_plate_reader = license_plate_reader
         self.opened_entry_gate_time = 0
         self.opened_exit_gate_time = 0
+        self.entry_gate_height = video_parameters['entry_gate_height']
+        self.exit_gate_height = video_parameters['exit_gate_height']
+        self.main_gate_entry_height = video_parameters['main_gate_entry_height']
+        self.main_gate_exit_width = video_parameters['main_gate_exit_width']
+        self.main_gate_distance = video_parameters['main_gate_distance']
 
     def __check_entry_gate(self, frame):
         plate = self.license_plate_reader.check_plate(frame)
@@ -34,14 +39,12 @@ class GateManager:
             self.__entry_gate_state = False
 
     def __check_exit_gate(self, frame):
-
         plate = self.license_plate_reader.check_plate(frame)
-
         if plate is not None:
             self.opened_exit_gate_time = 120
             self.__exit_gate_state = True
 
-        if self.opened_entry_gate_time > 0:
+        if self.opened_exit_gate_time > 0:
             self.opened_exit_gate_time -= 1
         else:
             self.__exit_gate_state = False
@@ -58,7 +61,6 @@ class GateManager:
         """
         if camera_type == CameraType.ENTRY_CAMERA.value:
             """Kamera wjazdowa"""
-            # self.__check_entry_gate(frame)
             entry_thread = threading.Thread(target=self.__process_entry_gate_in_background, args=(frame,))
             entry_thread.daemon = True
             entry_thread.start()
@@ -68,7 +70,6 @@ class GateManager:
             self.__draw_main_gate(frame)
         elif camera_type == CameraType.EXIT_CAMERA.value:
             """Kamera końcowa"""
-            # self.__check_exit_gate(frame)
             self.__draw_exit_gate(frame)
 
     def __draw_entry_gate(self, frame):
@@ -76,13 +77,12 @@ class GateManager:
             Rysowanie bramy wjazdowej
         """
         height, width, _ = frame.shape
-        line_y = 250
-        start_point = (60, line_y)
-        end_point = (width - 100, line_y)
+        start_point = (60, self.entry_gate_height)
+        end_point = (width - 100, self.entry_gate_height)
         color = (0, 0, 255)
         thickness = 10
         if self.__entry_gate_state:
-            cv2.line(frame, start_point, (width - 100, line_y - 500), (0, 255, 0), thickness)
+            cv2.line(frame, start_point, (width - 100, self.entry_gate_height - 500), (0, 255, 0), thickness)
         else:
             cv2.line(frame, start_point, end_point, color, thickness)
 
@@ -91,35 +91,35 @@ class GateManager:
             Rysowanie bramy wyjazdowej
         """
         height, width, _ = frame.shape
-        line_y = 170
-        start_point = (140, line_y)
-        end_point = (width - 50, line_y)
+        start_point = (140, self.exit_gate_height)
+        end_point = (width - 50, self.exit_gate_height)
         thickness = 10
         color = (0, 0, 255)
         if self.__exit_gate_state:
-            cv2.line(frame, (width - 50, line_y), (140, line_y - 500), (0, 255, 0), thickness)
+            cv2.line(frame, (width - 50, self.exit_gate_height), (140, self.exit_gate_height - 500), (0, 255, 0),
+                     thickness)
         else:
             cv2.line(frame, start_point, end_point, color, thickness)
 
     def __draw_main_gate(self, frame):
         """Linia wjazdowa"""
         height, width, _ = frame.shape
-        line_y_entry = 500
-        start_point = (140, line_y_entry)
-        end_point = (140, line_y_entry - 70)
+        line_y_entry = self.main_gate_entry_height
+        start_point = (self.main_gate_exit_width, line_y_entry)
+        end_point = (self.main_gate_exit_width, line_y_entry - 70)
         color = (0, 0, 255)
         thickness = 10
         if self.__entry_gate_state:
-            cv2.line(frame, start_point, (120, line_y_entry - 70), (0, 255, 0), 5)
+            cv2.line(frame, start_point, (self.main_gate_exit_width - 20, line_y_entry - 70), (0, 255, 0), 5)
         else:
             cv2.line(frame, start_point, end_point, color, thickness)
 
         """Linia wyjazdowa"""
-        line_y_exit = 50
-        start_point = (140, line_y_exit)
-        end_point = (140, line_y_exit + 70)
+        line_y_exit = self.main_gate_entry_height + self.main_gate_distance
+        start_point = (self.main_gate_exit_width, line_y_exit)
+        end_point = (self.main_gate_exit_width, line_y_exit + 70)
         if self.__exit_gate_state:
-            cv2.line(frame, start_point, (120, line_y_exit + 70), (0, 255, 0), 5)
+            cv2.line(frame, start_point, (self.main_gate_exit_width - 20, line_y_exit + 70), (0, 255, 0), 5)
         else:
             cv2.line(frame, start_point, end_point, color, thickness)
 
