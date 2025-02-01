@@ -68,3 +68,6 @@ class DatabaseConnector:
         cursor.execute(query)
         self.connection.commit()
         cursor.close()
+
+
+

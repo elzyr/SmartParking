@@ -1,7 +1,9 @@
 import threading
 
+from database.repository.CarRepository import CarRepository
 from videoprocessor.frameprocessor.LicensePlateReader import LicensePlateReader
 from videoprocessor.videomanager.CameraType import CameraType
+from database.connector.DatabaseConnector import DatabaseConnector
 
 import cv2
 
@@ -11,11 +13,13 @@ class GateManager:
         Klasa odpowiedzialna za zarządzanie bramami wjazdowymi i wyjazdowymi
     """
 
-    def __init__(self, license_plate_reader: LicensePlateReader, video_parameters):
+    def __init__(self, video_parameters, database_connector: CarRepository):
         self.__entry_gate_state = False
         self.__exit_gate_state = False
         self.__main_gate_state = False
-        self.license_plate_reader = license_plate_reader
+        self.database_connector = database_connector
+        self.license_plate_reader = LicensePlateReader(database_connector)
+        self.license_plate_reader_exit = LicensePlateReader(database_connector)
         self.opened_entry_gate_time = 0
         self.opened_exit_gate_time = 0
         self.entry_gate_height = video_parameters['entry_gate_height']
@@ -32,14 +36,14 @@ class GateManager:
             self.__entry_gate_state = True
 
         if self.opened_entry_gate_time > 0:
-            print('Opened')
+            # print('Opened')
             self.opened_entry_gate_time -= 1
         else:
-            print('Closed')
+            # print('Closed')
             self.__entry_gate_state = False
 
     def __check_exit_gate(self, frame):
-        plate = self.license_plate_reader.check_plate(frame)
+        plate = self.license_plate_reader_exit.check_plate(frame)
         if plate is not None:
             self.opened_exit_gate_time = 120
             self.__exit_gate_state = True
@@ -52,6 +56,10 @@ class GateManager:
     def __process_entry_gate_in_background(self, frame):
         """Ta funkcja będzie wywoływać __check_entry_gate w tle"""
         self.__check_entry_gate(frame)
+
+    def __process_exit_gate_in_background(self, frame):
+        """Ta funkcja będzie wywoływać __check_exit_gate w tle"""
+        self.__check_exit_gate(frame)
 
     def check_and_draw_gate(self, frame, camera_type: CameraType):
         """
@@ -70,6 +78,9 @@ class GateManager:
             self.__draw_main_gate(frame)
         elif camera_type == CameraType.EXIT_CAMERA.value:
             """Kamera końcowa"""
+            exit_thread = threading.Thread(target=self.__process_exit_gate_in_background, args=(frame,))
+            exit_thread.daemon = True
+            exit_thread.start()
             self.__draw_exit_gate(frame)
 
     def __draw_entry_gate(self, frame):

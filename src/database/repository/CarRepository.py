@@ -61,3 +61,17 @@ class CarRepository:
             logging.error(f"Error: {err}")
         except Exception as e:
             logging.error(f"Unexpected error: {e}")
+
+
+    def check_plate_in_database(self, plate_number):
+        print('Checking if plate is in database')
+        try:
+            cursor = self.db_connector.connection.cursor()
+            query = f"SELECT * FROM CARS WHERE registration = '{plate_number}'"
+            cursor.execute(query)
+            result = cursor.fetchone()
+            cursor.close()
+            return result
+        except mysql.connector.Error as err:
+            logging.error(f"Błąd bazy danych: {err}")
+            return False

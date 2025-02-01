@@ -15,7 +15,7 @@ class CameraProcessor:
 
     def __init__(self, database_connector: DatabaseConnector, video_parameters):
         self.database_connector = database_connector
-        self.all_cameras_resources = AllCamerasResources(video_parameters)
+        self.all_cameras_resources = AllCamerasResources(video_parameters, database_connector)
         self.entry_camera_processing = EntryCameraProcessing(self.database_connector, self.all_cameras_resources)
         self.main_camera_processing = MainCameraProcessing(self.database_connector, self.all_cameras_resources)
         self.exit_camera_processing = ExitCameraProcessing(self.database_connector, self.all_cameras_resources)
