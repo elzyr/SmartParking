@@ -16,7 +16,11 @@ video_configuration_json = {
                 (520, 385, 150, 90),
                 (520, 470, 150, 70),
             ],
-            'entry_gate_height': 0,
+            'entry_gate_height': 450,  # wysoksc w ktorym jest bramka wjazdowa
+            'exit_gate_height': 320,  # wysokosc w ktorym jest bramka wyjazdowa
+            'main_gate_entry_height': 530,  # wysokosc w ktorym jest główna bramka wjazdowa
+            'main_gate_exit_width': 180,  # szerokosc w ktorej jest bramka wyjazdowa
+            'main_gate_distance': -500,  # odleglosc miedzy bramkami
         }
     },
     'jasne niebieskie wyjazd': {
@@ -36,7 +40,11 @@ video_configuration_json = {
                 (520, 385, 150, 90),
                 (520, 470, 150, 70),
             ],
-            'entry_gate_height': 0,
+            'entry_gate_height': 450,
+            'exit_gate_height': 350,
+            'main_gate_entry_height': 530,
+            'main_gate_exit_width': 180,
+            'main_gate_distance': -500,
         }
     },
     'kolizja pojazdów': {
@@ -56,7 +64,11 @@ video_configuration_json = {
                 (520, 385, 150, 90),
                 (520, 470, 150, 70),
             ],
-            'entry_gate_height': 0,
+            'entry_gate_height': 470,
+            'exit_gate_height': 350,
+            'main_gate_entry_height': 530,
+            'main_gate_exit_width': 180,
+            'main_gate_distance': -500,
         }
     },
     'nie moze wjechac': {
@@ -76,7 +88,11 @@ video_configuration_json = {
                 (520, 385, 150, 90),
                 (520, 470, 150, 70),
             ],
-            'entry_gate_height': 0,
+            'entry_gate_height': 350,
+            'exit_gate_height': 170,
+            'main_gate_entry_height': 500,
+            'main_gate_exit_width': 180,
+            'main_gate_distance': -470,
         }
     },
     'powtorzona rejestracja': {
@@ -96,7 +112,11 @@ video_configuration_json = {
                 (520, 385, 150, 90),
                 (520, 470, 150, 70),
             ],
-            'entry_gate_height': 0,
+            'entry_gate_height': 250,
+            'exit_gate_height': 230,
+            'main_gate_entry_height': 530,
+            'main_gate_exit_width': 160,
+            'main_gate_distance': -500,
         }
     },
     'rozmyslil sie chlopak': {
@@ -116,7 +136,11 @@ video_configuration_json = {
                 (520, 375, 150, 90),
                 (520, 470, 150, 70),
             ],
-            'entry_gate_height': 0,
+            'entry_gate_height': 380,
+            'exit_gate_height': 230,
+            'main_gate_entry_height': 530,
+            'main_gate_exit_width': 180,
+            'main_gate_distance': -500,
         }
     },
     'szturchniecie pojazdow': {
@@ -136,7 +160,11 @@ video_configuration_json = {
                 (520, 375, 150, 90),
                 (520, 470, 150, 70),
             ],
-            'entry_gate_height': 0,
+            'entry_gate_height': 380,
+            'exit_gate_height': 230,
+            'main_gate_entry_height': 530,
+            'main_gate_exit_width': 180,
+            'main_gate_distance': -500,
         }
     },
     'wjazd, parkowanie  i wyjazd poprawne': {
@@ -156,7 +184,11 @@ video_configuration_json = {
                 (520, 385, 150, 90),
                 (520, 470, 150, 70),
             ],
-            'entry_gate_height': 0,
+            'entry_gate_height': 240,
+            'exit_gate_height': 240,
+            'main_gate_entry_height': 530,
+            'main_gate_exit_width': 180,
+            'main_gate_distance': -500,
         }
     },
     'wjazd bramka wjazdową do połowy, zawracanie, ponowne wjechanie i parkowanie': {
@@ -176,7 +208,11 @@ video_configuration_json = {
                 (520, 365, 150, 90),
                 (520, 470, 150, 70),
             ],
-            'entry_gate_height': 0,
+            'entry_gate_height': 380,
+            'exit_gate_height': 250,
+            'main_gate_entry_height': 530,
+            'main_gate_exit_width': 180,
+            'main_gate_distance': -500,
         }
     },
     'wjazd i wyjazd bramka wjazdowa, nastpnie wyjazd poprawny': {
@@ -196,7 +232,11 @@ video_configuration_json = {
                 (510, 365, 150, 90),
                 (510, 470, 150, 70),
             ],
-            'entry_gate_height': 0,
+            'entry_gate_height': 240,
+            'exit_gate_height': 235,
+            'main_gate_entry_height': 530,
+            'main_gate_exit_width': 160,
+            'main_gate_distance': -500,
         }
     },
     'wjazd parkowanie i próba wyjazdu bramka wjazdowa': {
@@ -216,7 +256,11 @@ video_configuration_json = {
                 (520, 375, 150, 80),
                 (520, 470, 150, 70),
             ],
-            'entry_gate_height': 0,
+            'entry_gate_height': 240,
+            'exit_gate_height': 220,
+            'main_gate_entry_height': 530,
+            'main_gate_exit_width': 180,
+            'main_gate_distance': -500,
         }
     },
     'wyjazd braz': {
@@ -236,7 +280,11 @@ video_configuration_json = {
                 (520, 375, 130, 80),
                 (520, 470, 130, 70),
             ],
-            'entry_gate_height': 0,
+            'entry_gate_height': 270,
+            'exit_gate_height': 250,
+            'main_gate_entry_height': 530,
+            'main_gate_exit_width': 180,
+            'main_gate_distance': -500,
         }
     },
     'wyjazd czerwone': {
@@ -256,7 +304,11 @@ video_configuration_json = {
                 (520, 375, 130, 80),
                 (520, 470, 130, 70),
             ],
-            'entry_gate_height': 0,
+            'entry_gate_height': 290,
+            'exit_gate_height': 280,
+            'main_gate_entry_height': 530,
+            'main_gate_exit_width': 180,
+            'main_gate_distance': -500,
         }
     },
     'wyjazd z parkingu brazowe auto': {
@@ -276,7 +328,11 @@ video_configuration_json = {
                 (520, 375, 130, 80),
                 (520, 470, 130, 70),
             ],
-            'entry_gate_height': 0,
+            'entry_gate_height': 290,
+            'exit_gate_height': 280,
+            'main_gate_entry_height': 530,
+            'main_gate_exit_width': 180,
+            'main_gate_distance': -500,
         }
     },
     'wyjazd z parkingu niebieskie autko': {
@@ -296,7 +352,11 @@ video_configuration_json = {
                 (520, 375, 130, 80),
                 (520, 470, 130, 70),
             ],
-            'entry_gate_height': 0,
+            'entry_gate_height': 290,
+            'exit_gate_height': 280,
+            'main_gate_entry_height': 530,
+            'main_gate_exit_width': 180,
+            'main_gate_distance': -500,
         }
     },
     'wyjazd zielone': {
@@ -316,7 +376,11 @@ video_configuration_json = {
                 (520, 375, 130, 80),
                 (520, 470, 130, 70),
             ],
-            'entry_gate_height': 0,
+            'entry_gate_height': 290,
+            'exit_gate_height': 280,
+            'main_gate_entry_height': 530,
+            'main_gate_exit_width': 180,
+            'main_gate_distance': -500,
         }
     },
     'wyjazd zolte': {
@@ -336,7 +400,11 @@ video_configuration_json = {
                 (520, 375, 130, 80),
                 (520, 470, 130, 70),
             ],
-            'entry_gate_height': 0,
+            'entry_gate_height': 290,
+            'exit_gate_height': 280,
+            'main_gate_entry_height': 530,
+            'main_gate_exit_width': 180,
+            'main_gate_distance': -500,
         }
     },
     'zly parking': {
@@ -356,7 +424,11 @@ video_configuration_json = {
                 (520, 375, 130, 80),
                 (520, 470, 130, 70),
             ],
-            'entry_gate_height': 0,
+            'entry_gate_height': 250,
+            'exit_gate_height': 235,
+            'main_gate_entry_height': 530,
+            'main_gate_exit_width': 180,
+            'main_gate_distance': -500,
         }
     },
 
