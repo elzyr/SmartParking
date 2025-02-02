@@ -28,13 +28,8 @@ class CarDetector:
         ]
         combined_mask = reduce(cv2.bitwise_or, masks)
 
-        white_lower = np.array([0, 0, 150], dtype=np.uint8) # ignorowanie jasnych obszarów
-        white_upper = np.array([220, 30, 255], dtype=np.uint8)
-        white_mask = cv2.inRange(hsv_image, white_lower, white_upper)
 
-        filtered_mask = cv2.bitwise_and(combined_mask, cv2.bitwise_not(white_mask))
-
-        return filtered_mask
+        return combined_mask
 
     def mask_edges(self, frame, border_size):
         """
@@ -139,6 +134,7 @@ class CarDetector:
         """
         Wykrywa zmiany w powierzchni obiektów i loguje incydent do bazy danych.
         """
+        global collision_pair
         for current in current_objects:
             for previous in self.previous_objects:
                 x1, y1, w1, h1 = current["bounding_box"]
@@ -147,13 +143,15 @@ class CarDetector:
                 overlap_x = (x1 < x2 + w2) and (x2 < x1 + w1)
                 overlap_y = (y1 < y2 + h2) and (y2 < y1 + h1)
                 if overlap_x and overlap_y:
-                    if abs(current["area"]) > abs(previous['area'] * 3.0) and abs(current["area"]) < 10000:
+                    if abs(current["area"]) > abs(previous['area']):
                         color1 = self.get_dominant_color(frame[y1:y1 + h1, x1:x1 + w1])
                         color2 = self.get_dominant_color(frame[y2:y2 + h2, x2:x2 + w2])
-                        collision_pair = tuple(sorted((color1, color2)))
-                        if collision_pair in self.detected_collisions:
-                            continue
+
                         if color2 == color1:
+                            collision_pair = tuple(sorted((color1, color2)))
+                            continue
+
+                        if collision_pair in self.detected_collisions:
                             continue
                         print(f"Kolizja wykryta! {color1} {color2} Zmieniona powierzchnia: {previous['area']} -> {current['area']}")
                         self.car_repository.car_incidents(color1, color2, "Collision detected")
