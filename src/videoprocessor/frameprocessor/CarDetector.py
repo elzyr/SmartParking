@@ -151,6 +151,10 @@ class CarDetector:
                             collision_pair = tuple(sorted((color1, color2)))
                             continue
 
+                        if self.db_connector.connection is None:
+                            logging.error("Brak połączenia z bazą danych - CarDetector!")
+                            return
+
                         if collision_pair in self.detected_collisions:
                             continue
                         print(f"Kolizja wykryta! {color1} {color2} Zmieniona powierzchnia: {previous['area']} -> {current['area']}")
