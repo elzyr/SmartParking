@@ -14,6 +14,7 @@ from videoprocessor.videomanager.VideoManager import VideoManager
 class VideoProcessor:
     def __init__(self, video_paths: list[str], db_config_file: str, video_parameters):
         self.database_connector = DatabaseConnector(db_config_file)
+        self.database_connector.connect()
         self.video_manager = VideoManager(video_paths)
         self.image_processor = CameraProcessor(self.database_connector, video_parameters)
 

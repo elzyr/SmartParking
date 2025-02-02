@@ -9,7 +9,6 @@ class EntryCameraProcessing:
         self.frame = None
         self.all_cameras_resources = all_cameras_resources
         self.gate_manager = all_cameras_resources.gate_manager
-        self.license_plate_reader = all_cameras_resources.license_plate_reader
         self.counter = 0
         print("Init")
 
@@ -20,8 +19,6 @@ class EntryCameraProcessing:
 
         # todo - przetwarzanie klatki z kamery wjazdowej
 
-        self.license_plate_reader.check_plate(self.frame)
-        self.counter += 1
 
         # check_and_draw_gate musi byc na koncu
         self.gate_manager.check_and_draw_gate(self.frame, camera_type=CameraType.ENTRY_CAMERA.value)
