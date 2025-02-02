@@ -16,6 +16,7 @@ class CarDetector:
         self.db_connector = db_connector
         self.detected_collisions = set()
         self.car_repository = CarRepository(db_connector)
+        self.collided_bounding_boxes = []
 
 
     def detect_cars_by_color(self, hsv_image):
@@ -74,7 +75,7 @@ class CarDetector:
 
         return frame, eroded_mask
 
-    def draw_car_localisation(self, frame, binary_mask, color=(150, 0, 0)):
+    def draw_car_localisation(self, frame, binary_mask, default_color=(150, 0, 0)):
         """
         Rysuje otoczki wypukłe wokół obiektów, które znajdują się w określonym prostokącie.
         :param frame: Obraz wejściowy (kolorowy).
@@ -83,10 +84,20 @@ class CarDetector:
         """
 
         contours, _ = cv2.findContours(binary_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-
+        collision_color = (215, 3, 252)  # Kolor kolizji
         # Otoczka wypukła
-        filtered_contours = [cv2.convexHull(contour) for contour in contours if cv2.contourArea(contour) >= 1000]
-        cv2.drawContours(frame, filtered_contours, -1, color, 2)
+        for contour in contours:
+            if cv2.contourArea(contour) >= 1000:
+                hull = cv2.convexHull(contour)
+                x, y, w, h = cv2.boundingRect(hull)
+                # Zmiana koloru otoczki w przypadku kolizji
+                color = default_color
+                for cb in self.collided_bounding_boxes:
+                    cx, cy, cw, ch = cb
+                    if (x < cx + cw and cx < x + w) and (y < cy + ch and cy < y + h):
+                        color = collision_color
+                        break
+                cv2.drawContours(frame, [hull], -1, color, 2)
 
     def get_detected_objects(self, frame, binary_mask):
         """
@@ -160,4 +171,6 @@ class CarDetector:
                         print(f"Kolizja wykryta! {color1} {color2} Zmieniona powierzchnia: {previous['area']} -> {current['area']}")
                         self.car_repository.car_incidents(color1, color2, "Collision detected")
                         self.detected_collisions.add(collision_pair)
+
+                        self.collided_bounding_boxes.append((x1, y1, w1, h1))
                         return
