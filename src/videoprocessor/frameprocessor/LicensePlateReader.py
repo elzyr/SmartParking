@@ -36,7 +36,7 @@ class LicensePlateReader:
 
     @staticmethod
     def is_plate_number(number):
-        pattern = r'^[A-Za-z]{2,2} ?[0-9]{4,5}[A-Za-z]{0,1}$'
+        pattern = r'^[A-Za-z]{2,3} ?[0-9]{4,5}[A-Za-z]{0,1}$'
         return bool(re.match(pattern, number, re.IGNORECASE))
 
     @staticmethod

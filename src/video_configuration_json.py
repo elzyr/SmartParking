@@ -431,5 +431,29 @@ video_configuration_json = {
             'main_gate_distance': -500,
         }
     },
+    'kolejka': {
+        'parameters': {
+            'parking_spaces': [
+                (180, 130, 70, 150),
+                (255, 130, 70, 150),
+                (330, 130, 70, 150),
+                (180, 285, 70, 150),
+                (255, 280, 70, 150),
+                (330, 275, 70, 150),
+
+                (520, 10, 150, 80),
+                (520, 95, 150, 80),
+                (520, 190, 150, 80),
+                (520, 285, 150, 80),
+                (520, 385, 150, 90),
+                (520, 470, 150, 70),
+            ],
+            'entry_gate_height': 350,
+            'exit_gate_height': 200,
+            'main_gate_entry_height': 530,
+            'main_gate_exit_width': 180,
+            'main_gate_distance': -500,
+        }
+    },
 
 }

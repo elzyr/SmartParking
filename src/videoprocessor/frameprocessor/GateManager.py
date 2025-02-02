@@ -27,10 +27,13 @@ class GateManager:
         self.main_gate_entry_height = video_parameters['main_gate_entry_height']
         self.main_gate_exit_width = video_parameters['main_gate_exit_width']
         self.main_gate_distance = video_parameters['main_gate_distance']
+        self.entry_plate = ""
+        self.exit_plate = ""
 
     def __check_entry_gate(self, frame):
         plate = self.license_plate_reader.check_plate(frame)
         if plate is not None:
+            self.entry_plate = plate
             print('Plate')
             self.opened_entry_gate_time = 120
             self.__entry_gate_state = True
@@ -45,6 +48,7 @@ class GateManager:
     def __check_exit_gate(self, frame):
         plate = self.license_plate_reader_exit.check_plate(frame)
         if plate is not None:
+            self.exit_plate = plate
             self.opened_exit_gate_time = 120
             self.__exit_gate_state = True
 
@@ -94,6 +98,12 @@ class GateManager:
         thickness = 10
         if self.__entry_gate_state:
             cv2.line(frame, start_point, (width - 100, self.entry_gate_height - 500), (0, 255, 0), thickness)
+            text_size = cv2.getTextSize(f"{self.entry_plate} Entered", cv2.FONT_HERSHEY_SIMPLEX, 2, 3)[0]
+            text_x = (width - text_size[0]) // 2
+            text_y = (text_size[1] + 10)
+            # Display the detected plate number in the center of the frame
+            cv2.putText(frame, f"{self.entry_plate} Entered", (text_x, text_y), cv2.FONT_HERSHEY_SIMPLEX, 2,
+                        (0, 255, 0), 3, cv2.LINE_AA)
         else:
             cv2.line(frame, start_point, end_point, color, thickness)
 
@@ -109,6 +119,12 @@ class GateManager:
         if self.__exit_gate_state:
             cv2.line(frame, (width - 50, self.exit_gate_height), (140, self.exit_gate_height - 500), (0, 255, 0),
                      thickness)
+            text_size = cv2.getTextSize(f"{self.exit_plate} Left", cv2.FONT_HERSHEY_SIMPLEX, 2, 3)[0]
+            text_x = (width - text_size[0]) // 2
+            text_y = (text_size[1] + 10)
+            # Display the detected plate number in the center of the frame
+            cv2.putText(frame, f"{self.exit_plate} Left", (text_x, text_y), cv2.FONT_HERSHEY_SIMPLEX, 2,
+                        (0, 255, 0), 3, cv2.LINE_AA)
         else:
             cv2.line(frame, start_point, end_point, color, thickness)
 
