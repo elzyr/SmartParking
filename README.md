@@ -13,10 +13,6 @@ SmartParking is an advanced parking monitoring system that utilizes three camera
 ![parking2](https://github.com/user-attachments/assets/b8594a07-9485-48fa-8626-d00b277eacdb)
 ![parking3](https://github.com/user-attachments/assets/fd6aeff9-261e-43db-ba28-6b98a0a38331)
 
-
-https://github.com/user-attachments/assets/9006c2d8-d3e6-46b3-8d9e-d42e804e5af1
-
-
 ## Technologies
 
 SmartParking is built using the following technologies:
@@ -34,7 +30,8 @@ SmartParking is built using the following technologies:
 ## Installation
 1. Clone the repository:
 ```
-git clone https://github.com/your-username/SmartParking.git cd SmartParking
+git clone https://github.com/elzyr/SmartParking.git
+cd SmartParking
 ```
 2. Create and activate a virtual environment:
 ```
