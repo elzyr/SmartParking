@@ -25,6 +25,7 @@ def database_example():
     car3 = Car('DW98002', 'Blue')
     car4 = Car('SWD5437L', 'Green')
     car5 = Car('KR4567H', 'Blue')
+    car5 = Car('LUB1241A', 'yellow')
     repository = CarRepository(db)
     repository.insert_car(car1)
     repository.insert_car(car2)
@@ -41,10 +42,8 @@ def database_example():
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-    wybor_filmu = 'kolizja pojazdów'
-
+    wybor_filmu = 'zly parking'
     paths = get_videos(wybor_filmu)
-
     video_parameters = video_configuration_json[wybor_filmu]['parameters']
     print(video_parameters)
     processor = VideoProcessor(paths, db_config_file='../config.ini', video_parameters=video_parameters)
