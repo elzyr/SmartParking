@@ -13,6 +13,8 @@ SmartParking is an advanced parking monitoring system that utilizes three camera
 ![parking2](https://github.com/user-attachments/assets/b8594a07-9485-48fa-8626-d00b277eacdb)
 ![parking3](https://github.com/user-attachments/assets/fd6aeff9-261e-43db-ba28-6b98a0a38331)
 
+https://github.com/user-attachments/assets/b989a769-b1c3-4bc5-b615-8699735adbf1
+
 ## Technologies
 
 SmartParking is built using the following technologies:
