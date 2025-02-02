@@ -7,8 +7,9 @@ import logging
 from src.database.repository.CarRepository import CarRepository
 import time
 
+
 class CarDetector:
-    def __init__(self,db_connector: DatabaseConnector):
+    def __init__(self, db_connector: DatabaseConnector):
         self.kernel_erode = np.ones((5, 5), np.uint8)
         self.kernel_close = np.ones((7, 7), np.uint8)
         self.color_ranges = COLOR_RANGES
@@ -17,7 +18,7 @@ class CarDetector:
         self.detected_collisions = set()
         self.car_repository = CarRepository(db_connector)
         self.collided_bounding_boxes = []
-
+        self.colision_display_time = 0
 
     def detect_cars_by_color(self, hsv_image):
         """
@@ -29,17 +30,16 @@ class CarDetector:
         ]
         combined_mask = reduce(cv2.bitwise_or, masks)
 
-
         return combined_mask
 
     def mask_edges(self, frame, border_size):
         """
         Zamienia krawędzie obrazu na czarne.
         """
-        frame[:border_size-2, :] = 0
-        frame[-border_size+2:, :] = 0
-        frame[:, :border_size-5] = 0
-        frame[:, -border_size+5:] = 0
+        frame[:border_size - 2, :] = 0
+        frame[-border_size + 2:, :] = 0
+        frame[:, :border_size - 5] = 0
+        frame[:, -border_size + 5:] = 0
         return frame
 
     def process_frame(self, frame):
@@ -72,7 +72,7 @@ class CarDetector:
         self.draw_car_localisation(cropped_frame, cropped_mask)
 
         frame[y1:y2, x1:x2] = cropped_frame
-
+        self.display_colision_text(frame)
         return frame, eroded_mask
 
     def draw_car_localisation(self, frame, binary_mask, default_color=(150, 0, 0)):
@@ -140,12 +140,22 @@ class CarDetector:
             logging.error(f"Error determining dominant color: {e}")
             return "error"
 
+    def display_colision_text(self, frame):
+        if self.colision_display_time > 0:
+            self.colision_display_time -= 1
+            height, width, _ = frame.shape
+            text_size = cv2.getTextSize(f"Collision", cv2.FONT_HERSHEY_SIMPLEX, 2, 3)[0]
+            text_x = (width - text_size[0]) // 2
+            text_y = (height - text_size[1])
+            # Display the detected plate number in the center of the frame
+            cv2.putText(frame, f"Collision", (text_x, text_y), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 3, cv2.LINE_AA)
+            return frame
 
     def detect_collision(self, current_objects, frame):
         """
         Wykrywa zmiany w powierzchni obiektów i loguje incydent do bazy danych.
         """
-        global collision_pair
+        collision_pair = ()
         for current in current_objects:
             for previous in self.previous_objects:
                 x1, y1, w1, h1 = current["bounding_box"]
@@ -154,7 +164,7 @@ class CarDetector:
                 overlap_x = (x1 < x2 + w2) and (x2 < x1 + w1)
                 overlap_y = (y1 < y2 + h2) and (y2 < y1 + h1)
                 if overlap_x and overlap_y:
-                    if abs(current["area"]) > abs(previous['area']):
+                    if abs(current["area"]) > abs(previous['area']) + 2000:
                         color1 = self.get_dominant_color(frame[y1:y1 + h1, x1:x1 + w1])
                         color2 = self.get_dominant_color(frame[y2:y2 + h2, x2:x2 + w2])
 
@@ -168,7 +178,9 @@ class CarDetector:
 
                         if collision_pair in self.detected_collisions:
                             continue
-                        print(f"Kolizja wykryta! {color1} {color2} Zmieniona powierzchnia: {previous['area']} -> {current['area']}")
+                        print(
+                            f"Kolizja wykryta! {color1} {color2} Zmieniona powierzchnia: {previous['area']} -> {current['area']}")
+                        self.colision_display_time = 60
                         self.car_repository.car_incidents(color1, color2, "Collision detected")
                         self.detected_collisions.add(collision_pair)
 
