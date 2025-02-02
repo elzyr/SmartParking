@@ -62,7 +62,6 @@ class CarRepository:
         except Exception as e:
             logging.error(f"Unexpected error: {e}")
 
-
     def check_plate_in_database(self, plate_number):
         print('Checking if plate is in database')
         try:
@@ -75,3 +74,16 @@ class CarRepository:
         except mysql.connector.Error as err:
             logging.error(f"Błąd bazy danych: {err}")
             return False
+
+    def car_incidents(self,color1, color2, description):
+        try:
+            cursor = self.db_connector.connection.cursor()
+            query = "INSERT INTO car_logs (color_car1, color_car2,description) VALUES (%s, %s, %s)"
+            cursor.execute(query, (color1, color2, description))
+            self.db_connector.connection.commit()
+            cursor.close()
+            logging.info('Added incident to the database')
+
+        except mysql.connector.Error as err:
+            logging.error(f"Error: {err}")
+

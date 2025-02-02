@@ -41,7 +41,8 @@ def database_example():
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-    wybor_filmu = 'wjazd, parkowanie  i wyjazd poprawne'
+    wybor_filmu = 'kolizja pojazdów'
+
     paths = get_videos(wybor_filmu)
 
     video_parameters = video_configuration_json[wybor_filmu]['parameters']

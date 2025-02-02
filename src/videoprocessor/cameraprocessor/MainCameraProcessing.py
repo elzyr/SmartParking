@@ -10,10 +10,11 @@ import cv2
 class MainCameraProcessing:
     def __init__(self, database_connector: DatabaseConnector, all_cameras_resources: AllCamerasResources):
         self.database_connector = database_connector
+        self.database_connector.connect()
         self.frame = None
         self.all_cameras_resources = all_cameras_resources
         self.gate_manager = all_cameras_resources.gate_manager
-        self.car_detector = CarDetector()
+        self.car_detector = CarDetector(self.database_connector)
         self.line_detector = LineDetector()
         self.original_frame = None
         self.parking_spaces = self.all_cameras_resources.parking_spaces
